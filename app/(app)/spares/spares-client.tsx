@@ -115,6 +115,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   const subCommodityOptions: SubCommodity[] = localCategory ? SUB_COMMODITY_BY_CATEGORY[localCategory] : [];
 
   const columns: ColumnDef<Spare>[] = [
+    // col 0 — sticky left: 0 (actions)
     {
       id: "actions",
       header: "",
@@ -138,38 +139,31 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       ),
       size: 148,
     } as ColumnDef<Spare>,
+    // col 1 — sticky left: 148 (tag frozen)
     {
       accessorKey: "tag",
       header: "Tag ID",
       cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.tag ?? "—"}</span>,
       size: 90,
     },
+    // col 2+ — scrollable
     {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => <span className="text-xs">{row.original.description ?? "—"}</span>,
-      size: 200,
+      accessorKey: "shipment_ref",
+      header: "Shipment Ref",
+      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.shipment_ref ?? "—"}</span>,
+      size: 100,
     },
     {
-      accessorKey: "qty_stock",
-      header: "Stock",
-      cell: ({ row }) => {
-        const qty = row.original.qty_stock;
-        const min = row.original.qty_min;
-        const colorClass =
-          qty === 0     ? "text-red-600 font-semibold" :
-          qty <= min    ? "text-amber-600 font-semibold" :
-                          "text-green-600 font-semibold";
-        return (
-          <span className={`font-mono-data text-xs ${colorClass}`}>
-            {qty}
-            {row.original.unit
-              ? <span className="text-muted-foreground font-normal ml-0.5">{row.original.unit}</span>
-              : null}
-          </span>
-        );
-      },
-      size: 72,
+      accessorKey: "pkg_no",
+      header: "PKG No",
+      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.pkg_no ?? "—"}</span>,
+      size: 80,
+    },
+    {
+      accessorKey: "packing_list",
+      header: "Packing List",
+      cell: ({ row }) => <span className="text-xs">{row.original.packing_list ?? "—"}</span>,
+      size: 90,
     },
     {
       accessorKey: "oem",
@@ -200,6 +194,33 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       header: "Manf Part No",
       cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.manf_part_number ?? "—"}</span>,
       size: 110,
+    },
+    {
+      accessorKey: "description",
+      header: "Description",
+      cell: ({ row }) => <span className="text-xs">{row.original.description ?? "—"}</span>,
+      size: 200,
+    },
+    {
+      accessorKey: "qty_stock",
+      header: "Stock",
+      cell: ({ row }) => {
+        const qty = row.original.qty_stock;
+        const min = row.original.qty_min;
+        const colorClass =
+          qty === 0  ? "text-red-600 font-semibold" :
+          qty <= min ? "text-amber-600 font-semibold" :
+                       "text-green-600 font-semibold";
+        return (
+          <span className={`font-mono-data text-xs ${colorClass}`}>
+            {qty}
+            {row.original.unit
+              ? <span className="text-muted-foreground font-normal ml-0.5">{row.original.unit}</span>
+              : null}
+          </span>
+        );
+      },
+      size: 72,
     },
     {
       accessorKey: "area",
@@ -253,24 +274,6 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
           {row.original.unit_cost != null ? formatCurrency(row.original.unit_cost, row.original.currency) : "—"}
         </span>
       ),
-      size: 90,
-    },
-    {
-      accessorKey: "shipment_ref",
-      header: "Shipment Ref",
-      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.shipment_ref ?? "—"}</span>,
-      size: 100,
-    },
-    {
-      accessorKey: "pkg_no",
-      header: "PKG No",
-      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.pkg_no ?? "—"}</span>,
-      size: 80,
-    },
-    {
-      accessorKey: "packing_list",
-      header: "Packing List",
-      cell: ({ row }) => <span className="text-xs">{row.original.packing_list ?? "—"}</span>,
       size: 90,
     },
   ];
