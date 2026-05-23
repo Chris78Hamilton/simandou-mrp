@@ -10,7 +10,9 @@
       "Bash(node -e \"const ssr = require\\('@supabase/ssr'\\); console.log\\(Object.keys\\(ssr\\)\\)\")",
       "Bash(node -e \"try { const m = require\\('./lib/supabase/server'\\); console.log\\('server ok'\\); } catch\\(e\\) { console.error\\(e.message\\); }\")",
       "Bash(Get-ChildItem *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }

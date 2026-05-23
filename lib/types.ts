@@ -102,6 +102,18 @@ export interface StockTransaction {
   spare_part_number: string | null;
   spare_oem: OEM | null;
   spare_bin: string | null;
+  // Extended fields (added via migration)
+  area: string | null;
+  system_name: string | null;
+  subsystem_name: string | null;
+  description_of_use: string | null;
+  issued_by: string | null;
+  received_by: string | null;
+  shipment_ref: string | null;
+  pkg_no: string | null;
+  packing_list: string | null;
+  osd: boolean;
+  osd_notes: string | null;
 }
 
 export interface PreservationLog {

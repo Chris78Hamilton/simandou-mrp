@@ -419,7 +419,7 @@ export function SpareForm({ spare, systems, subsystems }: Props) {
 
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
-        <Button type="submit" disabled={loading} className="bg-[#B45309] hover:bg-[#92400E]">
+        <Button type="submit" disabled={loading} className="bg-brand hover:bg-brand-dark">
           {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</> : isEdit ? "Update Spare" : "Add Spare"}
         </Button>
       </div>

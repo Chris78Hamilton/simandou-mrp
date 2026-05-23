@@ -201,7 +201,7 @@ export function PreservationClient({ items }: Props) {
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setLogItem(null)}>Cancel</Button>
-              <Button type="submit" disabled={loading} className="bg-[#B45309] hover:bg-[#92400E]">
+              <Button type="submit" disabled={loading} className="bg-brand hover:bg-brand-dark">
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</> : "Log Preservation"}
               </Button>
             </DialogFooter>

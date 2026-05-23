@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <div className="w-full max-w-md px-4">
       <div className="flex flex-col items-center mb-8">
-        <div className="w-14 h-14 bg-[#B45309] rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-amber-900/30">
+        <div className="w-14 h-14 bg-brand rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-amber-900/30">
           <HardHat className="w-8 h-8 text-white" />
         </div>
         <h1 className="text-2xl font-bold text-white">SIMANDOU MRP</h1>
@@ -56,7 +56,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-[#B45309]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-brand"
               />
             </div>
             <div className="space-y-2">
@@ -67,7 +67,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-[#B45309]"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-brand"
               />
             </div>
             {error && (
@@ -75,7 +75,7 @@ export default function LoginPage() {
                 {error}
               </div>
             )}
-            <Button type="submit" className="w-full bg-[#B45309] hover:bg-[#92400E] text-white" disabled={loading}>
+            <Button type="submit" className="w-full bg-brand hover:bg-brand-dark text-white" disabled={loading}>
               {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in...</> : "Sign In"}
             </Button>
           </form>

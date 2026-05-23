@@ -148,14 +148,14 @@ export default async function DashboardPage() {
           title="ABB Items"
           value={metrics?.total_abb ?? 0}
           icon={Package}
-          colorClass="text-[#0066B3]"
+          colorClass="text-abb-blue"
           subtext={`COMM: ${metrics?.comm_count ?? 0} · CI: ${metrics?.ci_count ?? 0}`}
         />
         <MetricCard
           title="TAKRAF Items"
           value={metrics?.total_takraf ?? 0}
           icon={Package}
-          colorClass="text-[#CC4400]"
+          colorClass="text-takraf-red"
           subtext={`2YR: ${metrics?.tyr_count ?? 0} · ST: ${metrics?.st_count ?? 0}`}
         />
       </div>

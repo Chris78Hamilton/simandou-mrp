@@ -50,10 +50,14 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Project brand colors — use these named classes everywhere, never arbitrary values
         sidebar: "#0F1117",
-        "amber-accent": "#B45309",
+        brand: "#B45309",
+        "brand-dark": "#92400E",
         "abb-blue": "#0066B3",
         "takraf-red": "#CC4400",
+        surface: "#FFFFFF",
+        "page-bg": "#F0F2F5",
       },
       fontFamily: {
         mono: ["JetBrains Mono", "Consolas", "monospace"],

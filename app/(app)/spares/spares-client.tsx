@@ -10,11 +10,12 @@ import {
 import { Spare, SparesFilters, System, Category, SubCommodity, SUB_COMMODITY_BY_CATEGORY, OEM } from "@/lib/types";
 import { OemBadge } from "@/components/spares/oem-badge";
 import { IssueDialog } from "@/components/spares/issue-dialog";
+import { ReceiptDialog } from "@/components/spares/receipt-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatCurrency, downloadCsv } from "@/lib/utils";
-import { Plus, Pencil, Trash2, ArrowLeftRight, Download, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Pencil, Trash2, ArrowLeftRight, PackagePlus, Download, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -38,6 +39,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   const isAdmin = true;
   const router = useRouter();
   const pathname = usePathname();
+  const [receiptSpare, setReceiptSpare] = useState<Spare | null>(null);
   const [issueSpare, setIssueSpare] = useState<Spare | null>(null);
   const [deleteSpare, setDeleteSpare] = useState<Spare | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -231,7 +233,10 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
               <Pencil className="w-3 h-3 mr-1" />Edit
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setIssueSpare(row.original)} title="Issue / Transfer">
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-green-600 hover:text-green-800 hover:bg-green-50" onClick={() => setReceiptSpare(row.original)} title="Goods Receipt">
+            <PackagePlus className="w-3.5 h-3.5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-amber-600 hover:text-amber-800 hover:bg-amber-50" onClick={() => setIssueSpare(row.original)} title="Issue Stock">
             <ArrowLeftRight className="w-3.5 h-3.5" />
           </Button>
           <Button variant="ghost" size="icon" className="h-7 w-7 text-red-500 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteSpare(row.original)} title="Delete">
@@ -239,7 +244,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
           </Button>
         </div>
       ),
-      size: 120,
+      size: 148,
     } as ColumnDef<Spare>,
   ];
 
@@ -292,7 +297,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
           <Button variant="outline" size="sm" onClick={handleExport}>
             <Download className="w-4 h-4" /> Export CSV
           </Button>
-          <Button size="sm" asChild style={{ backgroundColor: "#B45309" }}>
+          <Button size="sm" asChild className="bg-brand hover:bg-brand-dark text-white">
             <Link href="/spares/new"><Plus className="w-4 h-4" /> Add Spare</Link>
           </Button>
         </div>
@@ -466,12 +471,21 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
         </div>
       </div>
 
+      {receiptSpare && (
+        <ReceiptDialog
+          spare={receiptSpare}
+          open={!!receiptSpare}
+          onClose={() => setReceiptSpare(null)}
+          onSuccess={() => router.refresh()}
+        />
+      )}
+
       {issueSpare && (
         <IssueDialog
           spare={issueSpare}
           open={!!issueSpare}
           onClose={() => setIssueSpare(null)}
-          onSuccess={() => { setIssueSpare(null); router.refresh(); }}
+          onSuccess={() => router.refresh()}
         />
       )}
 
