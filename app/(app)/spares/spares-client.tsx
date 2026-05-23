@@ -115,7 +115,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   const subCommodityOptions: SubCommodity[] = localCategory ? SUB_COMMODITY_BY_CATEGORY[localCategory] : [];
 
   const columns: ColumnDef<Spare>[] = [
-    // col 0 — sticky left: 0 (actions)
+    // col 0 — sticky left: 0 (actions only)
     {
       id: "actions",
       header: "",
@@ -139,14 +139,6 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       ),
       size: 148,
     } as ColumnDef<Spare>,
-    // col 1 — sticky left: 148 (tag frozen)
-    {
-      accessorKey: "tag",
-      header: "Tag ID",
-      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.tag ?? "—"}</span>,
-      size: 90,
-    },
-    // col 2+ — scrollable
     {
       accessorKey: "shipment_ref",
       header: "Shipment Ref",
@@ -163,6 +155,12 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       accessorKey: "packing_list",
       header: "Packing List",
       cell: ({ row }) => <span className="text-xs">{row.original.packing_list ?? "—"}</span>,
+      size: 90,
+    },
+    {
+      accessorKey: "tag",
+      header: "Tag ID",
+      cell: ({ row }) => <span className="font-mono-data text-xs">{row.original.tag ?? "—"}</span>,
       size: 90,
     },
     {
@@ -444,8 +442,8 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
                         width: header.getSize(),
                         position: "sticky",
                         top: 0,
-                        left: colIdx === 0 ? 0 : colIdx === 1 ? 148 : undefined,
-                        zIndex: colIdx < 2 ? 30 : 20,
+                        left: colIdx === 0 ? 0 : undefined,
+                        zIndex: colIdx < 1 ? 30 : 20,
                       }}
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
@@ -466,13 +464,13 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
                       key={cell.id}
                       className={cn(
                         "px-3 py-2.5 border-b",
-                        colIdx < 2 && "bg-white group-hover:bg-gray-50 transition-colors"
+                        colIdx < 1 && "bg-white group-hover:bg-gray-50 transition-colors"
                       )}
                       style={{
                         width: cell.column.getSize(),
-                        ...(colIdx < 2 ? {
+                        ...(colIdx < 1 ? {
                           position: "sticky" as const,
-                          left: colIdx === 0 ? 0 : 148,
+                          left: 0,
                           zIndex: 10,
                         } : {}),
                       }}
