@@ -115,6 +115,58 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   const subCommodityOptions: SubCommodity[] = localCategory ? SUB_COMMODITY_BY_CATEGORY[localCategory] : [];
 
   const columns: ColumnDef<Spare>[] = [
+    // col 0 — sticky left: 0
+    {
+      id: "actions",
+      header: "",
+      cell: ({ row }: { row: { original: Spare } }) => (
+        <div className="flex gap-1">
+          <Button variant="outline" size="sm" className="h-7 px-2 text-xs" asChild>
+            <Link href={`/spares/${row.original.id}/edit`}>
+              <Pencil className="w-3 h-3 mr-1" />Edit
+            </Link>
+          </Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-green-600 hover:text-green-800 hover:bg-green-50" onClick={() => setReceiptSpare(row.original)} title="Goods Receipt">
+            <PackagePlus className="w-3.5 h-3.5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-amber-600 hover:text-amber-800 hover:bg-amber-50" onClick={() => setIssueSpare(row.original)} title="Issue Stock">
+            <ArrowLeftRight className="w-3.5 h-3.5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="h-7 w-7 text-red-500 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteSpare(row.original)} title="Delete">
+            <Trash2 className="w-3.5 h-3.5" />
+          </Button>
+        </div>
+      ),
+      size: 148,
+    } as ColumnDef<Spare>,
+    // col 1 — sticky left: 148
+    {
+      accessorKey: "qty_stock",
+      header: "Stock",
+      cell: ({ row }) => {
+        const qty = row.original.qty_stock;
+        const min = row.original.qty_min;
+        const colorClass = qty === 0
+          ? "text-red-600 font-semibold"
+          : qty <= min
+          ? "text-amber-600 font-semibold"
+          : "text-green-600 font-semibold";
+        return (
+          <span className={`font-mono-data text-xs ${colorClass}`}>
+            {qty}
+            {row.original.unit ? <span className="text-muted-foreground font-normal ml-0.5">{row.original.unit}</span> : null}
+          </span>
+        );
+      },
+      size: 72,
+    },
+    // col 2 onwards — not sticky
+    {
+      accessorKey: "description",
+      header: "Description",
+      cell: ({ row }) => <span className="text-xs">{row.original.description ?? "—"}</span>,
+      size: 200,
+    },
     {
       accessorKey: "shipment_ref",
       header: "Shipment Ref",
@@ -223,29 +275,6 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       ),
       size: 90,
     },
-    {
-      id: "actions",
-      header: "",
-      cell: ({ row }: { row: { original: Spare } }) => (
-        <div className="flex gap-1">
-          <Button variant="outline" size="sm" className="h-7 px-2 text-xs" asChild>
-            <Link href={`/spares/${row.original.id}/edit`}>
-              <Pencil className="w-3 h-3 mr-1" />Edit
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 text-green-600 hover:text-green-800 hover:bg-green-50" onClick={() => setReceiptSpare(row.original)} title="Goods Receipt">
-            <PackagePlus className="w-3.5 h-3.5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 text-amber-600 hover:text-amber-800 hover:bg-amber-50" onClick={() => setIssueSpare(row.original)} title="Issue Stock">
-            <ArrowLeftRight className="w-3.5 h-3.5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 text-red-500 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteSpare(row.original)} title="Delete">
-            <Trash2 className="w-3.5 h-3.5" />
-          </Button>
-        </div>
-      ),
-      size: 148,
-    } as ColumnDef<Spare>,
   ];
 
   const table = useReactTable({
@@ -414,7 +443,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
                         width: header.getSize(),
                         position: "sticky",
                         top: 0,
-                        left: colIdx === 0 ? 0 : colIdx === 1 ? 100 : undefined,
+                        left: colIdx === 0 ? 0 : colIdx === 1 ? 148 : undefined,
                         zIndex: colIdx < 2 ? 30 : 20,
                       }}
                     >
@@ -442,7 +471,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
                         width: cell.column.getSize(),
                         ...(colIdx < 2 ? {
                           position: "sticky" as const,
-                          left: colIdx === 0 ? 0 : 100,
+                          left: colIdx === 0 ? 0 : 148,
                           zIndex: 10,
                         } : {}),
                       }}
