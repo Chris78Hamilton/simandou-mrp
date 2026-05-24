@@ -138,7 +138,6 @@ export function ReceiptDialog({ spare, open, onClose, onSuccess }: Props) {
   async function onSubmit(data: FormData) {
     setLoading(true);
     const supabase = createClient();
-    console.log('[GR] supabase url:', supabase.supabaseUrl);
     const { data: tx, error } = await supabase.rpc("receipt_stock", {
       p_spare_id:     spare.id,
       p_quantity:     data.quantity,
