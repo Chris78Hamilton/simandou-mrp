@@ -1,4 +1,4 @@
-import { createClient, getUserRole } from "@/lib/supabase/server";
+import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
 import { Spare, SparesFilters, System } from "@/lib/types";
 import { SparesClient } from "./spares-client";
 
@@ -19,7 +19,7 @@ interface PageProps {
 }
 
 async function getSpares(filters: SparesFilters) {
-  const supabase = createClient();
+  const supabase = createServiceClient();
   const { page, pageSize, search, oem, category, sub_commodity, system_id, stock_status, osd, delivered } = filters;
 
   let query = supabase
