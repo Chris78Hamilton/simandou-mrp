@@ -136,6 +136,7 @@ export function ReceiptDialog({ spare, open, onClose, onSuccess }: Props) {
   const osd = watch("osd");
 
   async function onSubmit(data: FormData) {
+    console.log('[GR] form submitted', data);
     setLoading(true);
     const supabase = createClient();
     const { data: tx, error } = await supabase.rpc("receipt_stock", {
@@ -264,7 +265,7 @@ export function ReceiptDialog({ spare, open, onClose, onSuccess }: Props) {
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleClose}>Cancel</Button>
-              <Button type="submit" disabled={loading} className="bg-green-700 hover:bg-green-800">
+              <Button type="submit" disabled={loading} className="bg-green-700 hover:bg-green-800" onClick={() => console.log('[GR] form errors', form.formState.errors)}>
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin mr-1" />Receiving...</> : "Receive Stock"}
               </Button>
             </DialogFooter>
