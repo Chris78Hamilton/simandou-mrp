@@ -265,7 +265,7 @@ export function ReceiptDialog({ spare, open, onClose, onSuccess }: Props) {
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleClose}>Cancel</Button>
-              <Button type="submit" disabled={loading} className="bg-green-700 hover:bg-green-800" onClick={() => console.log('[GR] form errors', form.formState.errors)}>
+              <Button type="submit" disabled={loading} className="bg-green-700 hover:bg-green-800">
                 {loading ? <><Loader2 className="w-4 h-4 animate-spin mr-1" />Receiving...</> : "Receive Stock"}
               </Button>
             </DialogFooter>
