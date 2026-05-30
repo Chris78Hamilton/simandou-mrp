@@ -1,6 +1,8 @@
-import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
+﻿import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
 import { Spare, SparesFilters, System } from "@/lib/types";
 import { SparesClient } from "@/app/(app)/spares/spares-client";
+import { Suspense } from "react";
+import { OemTabs } from "@/components/spares/oem-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -13,13 +15,14 @@ interface PageProps {
     stock_status?: string;
     osd?: string;
     delivered?: string;
+    spare_type?: string;
     page?: string;
   };
 }
 
 async function getSpares(filters: SparesFilters) {
   const supabase = createServiceClient();
-  const { page, pageSize, search, category, sub_commodity, system_id, stock_status, osd, delivered } = filters;
+  const { page, pageSize, search, category, sub_commodity, system_id, stock_status, osd, delivered, spare_type } = filters;
 
   let query = supabase
     .from("spares")
@@ -31,9 +34,10 @@ async function getSpares(filters: SparesFilters) {
       `tag.ilike.%${search}%,part_number.ilike.%${search}%,manf_part_number.ilike.%${search}%,description.ilike.%${search}%,shipment_ref.ilike.%${search}%,pkg_no.ilike.%${search}%`
     );
   }
-  if (category) query = query.eq("category", category);
+  if (category)      query = query.eq("category", category);
   if (sub_commodity) query = query.eq("sub_commodity", sub_commodity);
-  if (system_id) query = query.eq("system_id", system_id);
+  if (system_id)     query = query.eq("system_id", system_id);
+  if (spare_type)    query = query.eq("spare_type", spare_type);
   if (osd === "yes") query = query.eq("osd", true);
   else if (osd === "no") query = query.eq("osd", false);
   if (delivered === "yes") query = query.eq("delivered", true);
@@ -46,6 +50,7 @@ async function getSpares(filters: SparesFilters) {
   const to = from + pageSize - 1;
 
   const { data, count, error } = await query
+    .order("pkg_no", { ascending: true, nullsFirst: false })
     .order("description", { ascending: true })
     .range(from, to);
 
@@ -61,14 +66,15 @@ async function getSystems() {
 export default async function AbbPage({ searchParams }: PageProps) {
   const page = parseInt(searchParams.page ?? "1", 10);
   const filters: SparesFilters = {
-    search: searchParams.search ?? "",
-    oem: "ABB",
-    category: (searchParams.category as SparesFilters["category"]) ?? "",
+    search:        searchParams.search ?? "",
+    oem:           "ABB",
+    category:      (searchParams.category as SparesFilters["category"]) ?? "",
     sub_commodity: (searchParams.sub_commodity as SparesFilters["sub_commodity"]) ?? "",
-    system_id: searchParams.system_id ?? "",
-    stock_status: (searchParams.stock_status as SparesFilters["stock_status"]) ?? "",
-    osd: (searchParams.osd as SparesFilters["osd"]) ?? "",
-    delivered: (searchParams.delivered as SparesFilters["delivered"]) ?? "",
+    system_id:     searchParams.system_id ?? "",
+    stock_status:  (searchParams.stock_status as SparesFilters["stock_status"]) ?? "",
+    osd:           (searchParams.osd as SparesFilters["osd"]) ?? "",
+    delivered:     (searchParams.delivered as SparesFilters["delivered"]) ?? "",
+    spare_type:    (searchParams.spare_type as SparesFilters["spare_type"]) ?? "",
     page,
     pageSize: 50,
   };
@@ -80,14 +86,14 @@ export default async function AbbPage({ searchParams }: PageProps) {
   ]);
 
   return (
-    <SparesClient
-      initialSpares={spares}
-      total={total}
-      systems={systems}
-      initialFilters={filters}
-      canEdit={canEdit}
-      isAdmin={isAdmin}
-      lockedOem="ABB"
-    />
-  );
-}
+    <div className="flex flex-col h-full">
+      <Suspense fallback={null}>
+        <OemTabs />
+      </Suspense>
+      <SparesClient
+        initialSpares={spares}
+        total={total}
+        systems={systems}
+        initialFilters={filters}
+        canEdit={canEdit}
+        isAdmin={isAd
