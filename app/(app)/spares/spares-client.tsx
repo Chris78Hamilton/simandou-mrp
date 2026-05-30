@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   useReactTable,
@@ -46,6 +46,35 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   const [isPending, startTransition] = useTransition();
   const [searchValue, setSearchValue] = useState(initialFilters.search ?? "");
   const [localCategory, setLocalCategory] = useState<Category | "">(lockedCategory ?? initialFilters.category ?? "");
+  const [columnFilters, setColumnFilters] = useState<Record<string, string>>({
+    shipment_ref: "", pkg_no: "", packing_list: "", tag: "",
+    sub_manufacturer: "", item_description: "", part_number: "",
+    manf_part_number: "", description: "", area: "", subsystem: "",
+  });
+
+  const filteredSpares = useMemo(() => {
+    const active = Object.entries(columnFilters).filter(([, v]) => v !== "");
+    if (active.length === 0) return initialSpares;
+    return initialSpares.filter((s) =>
+      active.every(([key, val]) => {
+        const v = val.toLowerCase();
+        switch (key) {
+          case "shipment_ref":    return (s.shipment_ref ?? "").toLowerCase().includes(v);
+          case "pkg_no":          return (s.pkg_no ?? "").toLowerCase().includes(v);
+          case "packing_list":    return (s.packing_list ?? "").toLowerCase().includes(v);
+          case "tag":             return (s.tag ?? "").toLowerCase().includes(v);
+          case "sub_manufacturer":return (s.sub_manufacturer ?? "").toLowerCase().includes(v);
+          case "item_description":return (s.item_description ?? "").toLowerCase().includes(v);
+          case "part_number":     return (s.part_number ?? "").toLowerCase().includes(v);
+          case "manf_part_number":return (s.manf_part_number ?? "").toLowerCase().includes(v);
+          case "description":     return (s.description ?? "").toLowerCase().includes(v);
+          case "area":            return (s.area ?? "").toLowerCase().includes(v);
+          case "subsystem":       return (s.subsystems?.name ?? "").toLowerCase().includes(v);
+          default:                return true;
+        }
+      })
+    );
+  }, [initialSpares, columnFilters]);
 
   const totalPages = Math.ceil(total / initialFilters.pageSize);
 
@@ -277,7 +306,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
   ];
 
   const table = useReactTable({
-    data: initialSpares,
+    data: filteredSpares,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -286,7 +315,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
 
   function handleExport() {
     downloadCsv(
-      initialSpares.map((s) => ({
+      filteredSpares.map((s) => ({
         shipment_ref: s.shipment_ref,
         pkg_no: s.pkg_no,
         packing_list: s.packing_list,
@@ -449,6 +478,37 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
+                </tr>
+              ))}
+              {table.getHeaderGroups().map((hg) => (
+                <tr key={hg.id + "-filters"}>
+                  {hg.headers.map((header, colIdx) => {
+                    const filterKey = [
+                      "shipment_ref","pkg_no","packing_list","tag","sub_manufacturer",
+                      "item_description","part_number","manf_part_number","description","area","subsystem",
+                    ].includes(header.column.id) ? header.column.id : undefined;
+                    return (
+                      <th
+                        key={header.id + "-f"}
+                        className="px-1 py-1 bg-white border-b"
+                        style={{
+                          width: header.getSize(),
+                          position: "sticky",
+                          top: 33,
+                          left: colIdx === 0 ? 0 : undefined,
+                          zIndex: colIdx < 1 ? 30 : 20,
+                        }}
+                      >
+                        {filterKey && (
+                          <input
+                            value={columnFilters[filterKey]}
+                            onChange={(e) => setColumnFilters((prev) => ({ ...prev, [filterKey]: e.target.value }))}
+                            className="h-6 text-xs px-1 w-full border rounded"
+                          />
+                        )}
+                      </th>
+                    );
+                  })}
                 </tr>
               ))}
             </thead>
