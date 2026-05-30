@@ -13,7 +13,7 @@ export interface Profile {
 export type OEM = "ABB" | "TAKRAF";
 export type Category = "PS" | "SPS" | "ST";
 export type SubCommodityPS = "BLUE LINE" | "RED LINE" | "ST";
-export type SubCommoditySPS = "COMM" | "CI" | "2YR" | "ST";
+export type SubCommoditySPS = "COMM" | "CI" | "2YR" | "ST" | "SCO" | "SCA" | "S2Y" | "MRF" | "PS";
 export type SubCommodityST = "ABB" | "TAKRAF";
 export type SubCommodity = SubCommodityPS | SubCommoditySPS | SubCommodityST;
 export type MovementType = "receipt" | "issue" | "adjustment" | "return";
@@ -24,7 +24,7 @@ export type UOM = typeof UOM_OPTIONS[number];
 
 export const SUB_COMMODITY_BY_CATEGORY: Record<Category, SubCommodity[]> = {
   PS: ["BLUE LINE", "RED LINE", "ST"],
-  SPS: ["COMM", "CI", "2YR", "ST"],
+  SPS: ["SCO", "SCA", "S2Y", "ST", "COMM", "CI", "MRF", "PS"],
   ST: ["ABB", "TAKRAF"],
 };
 
