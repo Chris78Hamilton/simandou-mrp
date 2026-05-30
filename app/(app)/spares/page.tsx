@@ -14,13 +14,14 @@ interface PageProps {
     stock_status?: string;
     osd?: string;
     delivered?: string;
+    spare_type?: string;
     page?: string;
   };
 }
 
 async function getSpares(filters: SparesFilters) {
   const supabase = createServiceClient();
-  const { page, pageSize, search, oem, category, sub_commodity, system_id, stock_status, osd, delivered } = filters;
+  const { page, pageSize, search, oem, category, sub_commodity, system_id, stock_status, osd, delivered, spare_type } = filters;
 
   let query = supabase
     .from("spares")
@@ -39,6 +40,7 @@ async function getSpares(filters: SparesFilters) {
   else if (osd === "no") query = query.eq("osd", false);
   if (delivered === "yes") query = query.eq("delivered", true);
   else if (delivered === "no") query = query.eq("delivered", false);
+  if (spare_type) query = query.eq("spare_type", spare_type);
   if (stock_status === "zero") query = query.eq("qty_stock", 0);
   else if (stock_status === "low") query = query.gt("qty_stock", 0).filter("qty_stock", "lte", "qty_min");
   else if (stock_status === "ok") query = query.filter("qty_stock", "gt", "qty_min");
@@ -70,6 +72,7 @@ export default async function SparesPage({ searchParams }: PageProps) {
     stock_status: (searchParams.stock_status as SparesFilters["stock_status"]) ?? "",
     osd: (searchParams.osd as SparesFilters["osd"]) ?? "",
     delivered: (searchParams.delivered as SparesFilters["delivered"]) ?? "",
+    spare_type: (searchParams.spare_type as SparesFilters["spare_type"]) ?? "",
     page,
     pageSize: 50,
   };

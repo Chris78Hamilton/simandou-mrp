@@ -166,6 +166,7 @@ export interface SparesFilters {
   stock_status?: "zero" | "low" | "ok" | "";
   osd?: "yes" | "no" | "";
   delivered?: "yes" | "no" | "";
+  spare_type?: string;
   page: number;
   pageSize: number;
 }
