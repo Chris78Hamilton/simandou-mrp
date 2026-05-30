@@ -1,0 +1,133 @@
+upplier            Short Goods Description
+
+1            TAKRAF - Primary Sizer - 1.
+
+2            TAKRAF - Pulleys (open)
+
+3            TAKRAF - Reamer
+
+4            ABB - Electrical Equipment - 5. (ammendments, add, rest))
+
+5            ABB - Electrical houses
+
+6            Schenck - Train Loading station - Germany Portion
+
+7            Siebtechnik - sampling station
+
+8            Lorbrand - Idler&Frames 1.
+
+9            Rexroth - Hydraulic equipment 1. (Austria)
+
+10         Delimon - lubrication system - shipment 1
+
+11         Tecman - Rock Breaker PCP2
+
+12         Schmiedl - Bridge Crane
+
+13         SEW - Travel and Slew Drives - 1.
+
+14         Flender - Drives 1.
+
+15         Eriez  - Magnet Separation 1.+2.
+
+16         Schulte Straathaus - Belt Cleaner - shipment 4
+
+17         Belt Cover (Achenbach)
+
+18         Rope Winches (HADEF) -  cover for all brakes shipment 5.
+
+19         Belt (Boton) - 1st shipment
+
+20         Chenxin - Steel Structure 3 (30t) - 15% First Delivery
+
+21         COSCO - Steel  Structure 9.
+
+22         SCG - Steel Structure 45.
+
+23         TZME - Steel Structure  1.
+
+24         MTS - Belt scale  - 1.
+
+25         SIMPEX 1.
+
+26         Liebherr Comonents 1.
+
+27         Rulmeca 2.
+
+28         Dust collection (DFT)
+
+29         Dust Supression System / Stockyard sprinkler (VSR) - 3. shipment
+
+30         Rope Sheaves (BAMOS)
+
+31         Hose Reeler (Conductix) 4.
+
+32         Metal Detector (Tectron) 2.
+
+33         Online Moisture Analyzer - RTI
+
+34         Hydraulic Buffer (SHB)
+
+35         Rails (Tianjin Ocean)
+
+37         Mobile Compressor (Apikal)
+
+38         Energy Chain (IGUS) 2.
+
+39         Slurry Pumps (Weir Minerals)
+
+40         Wheels (Karl Georg) 1.
+
+41         Hoists ( HADEF) - first lot
+
+42         Ropes ( Pfeifer ) - 1.
+
+43         Chute Seal - (Metso)
+
+44         TAKRAF Gear Rim 1
+
+45         SDU
+
+46         V&P Piping 1.
+
+47         Vitaulic Piping via V&P
+
+46+47 Vitaulic / V&P -  Overages
+
+48         Fuchs + Sander 1. (Fastener < 10.9)
+
+49         LISol (first shipment with lubricants )
+
+50         Fire Extinguisher
+
+51         Touch Up Paint 1.
+
+52         Werbefabrik Company & Warning signs
+
+53         Real Safety
+
+54         Vollmer - cladding 1.
+
+55         SBE - cladding
+
+56         Weir Minerals Africa - vulco lip liners
+
+57         Gantrex - Rails
+
+58         ELASKON - lubricants
+
+59         Zeppelin - site material
+
+60         Sonepar - electrical components - site material
+
+61         RM Labels
+
+62         BBCP Service Winch
+
+63         Wipware - Particel Sizer Analyzer (main delivery)
+
+64         Planeta -  SPT
+
+65         Baustoffzentrum -  SPT
+
+ 

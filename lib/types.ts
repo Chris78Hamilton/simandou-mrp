@@ -1,4 +1,4 @@
-export type UserRole = "viewer" | "editor" | "admin";
+﻿export type UserRole = "viewer" | "editor" | "admin";
 
 export interface Profile {
   id: string;
@@ -48,6 +48,7 @@ export interface Spare {
   part_number: string | null;
   manf_part_number: string | null;
   pkg_no: string | null;
+  spare_type: "SCO" | "S2Y" | "SCA" | null;
   description: string;
   category: Category | null;
   sub_commodity: SubCommodity | null;
@@ -111,6 +112,7 @@ export interface StockTransaction {
   received_by: string | null;
   shipment_ref: string | null;
   pkg_no: string | null;
+  spare_type: "SCO" | "S2Y" | "SCA" | null;
   packing_list: string | null;
   osd: boolean;
   osd_notes: string | null;
@@ -180,3 +182,4 @@ export interface TransactionFilters {
   page: number;
   pageSize: number;
 }
+
