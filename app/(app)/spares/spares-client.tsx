@@ -89,6 +89,7 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
       stock_status: initialFilters.stock_status || undefined,
       osd: initialFilters.osd || undefined,
       delivered: initialFilters.delivered || undefined,
+      spare_type: initialFilters.spare_type || undefined,
       page: String(initialFilters.page),
     };
     const merged = { ...current, ...overrides };
