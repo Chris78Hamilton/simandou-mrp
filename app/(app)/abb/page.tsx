@@ -1,4 +1,4 @@
-﻿import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
+import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
 import { Spare, SparesFilters, System } from "@/lib/types";
 import { SparesClient } from "@/app/(app)/spares/spares-client";
 import { Suspense } from "react";
@@ -96,4 +96,8 @@ export default async function AbbPage({ searchParams }: PageProps) {
         systems={systems}
         initialFilters={filters}
         canEdit={canEdit}
-        isAdmin={isAd
+        isAdmin={isAdmin}
+      />
+    </div>
+  );
+}
