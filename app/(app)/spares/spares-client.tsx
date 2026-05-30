@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState, useTransition } from "react";
+import { Suspense, useCallback, useMemo, useState, useTransition } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
   useReactTable,
@@ -20,6 +20,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { createClient } from "@/lib/supabase/client";
+import { OemTabs } from "@/components/spares/oem-tabs";
 import { toast } from "@/hooks/use-toast";
 
 interface Props {
@@ -344,6 +345,11 @@ export function SparesClient({ initialSpares, total, systems, initialFilters, ca
 
   return (
     <div className="p-6 space-y-4">
+      {lockedOem && (
+        <Suspense fallback={null}>
+          <OemTabs />
+        </Suspense>
+      )}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">

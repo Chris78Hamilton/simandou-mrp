@@ -1,8 +1,6 @@
 import { createClient, createServiceClient, getUserRole } from "@/lib/supabase/server";
 import { Spare, SparesFilters, System } from "@/lib/types";
 import { SparesClient } from "@/app/(app)/spares/spares-client";
-import { Suspense } from "react";
-import { OemTabs } from "@/components/spares/oem-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -86,18 +84,14 @@ export default async function AbbPage({ searchParams }: PageProps) {
   ]);
 
   return (
-    <div className="flex flex-col h-full">
-      <Suspense fallback={null}>
-        <OemTabs />
-      </Suspense>
-      <SparesClient
-        initialSpares={spares}
-        total={total}
-        systems={systems}
-        initialFilters={filters}
-        canEdit={canEdit}
-        isAdmin={isAdmin}
-      />
-    </div>
+    <SparesClient
+      initialSpares={spares}
+      total={total}
+      systems={systems}
+      initialFilters={filters}
+      canEdit={canEdit}
+      isAdmin={isAdmin}
+      lockedOem="ABB"
+    />
   );
 }
